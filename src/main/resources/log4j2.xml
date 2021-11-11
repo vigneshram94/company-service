@@ -3,7 +3,7 @@
     <Appenders>
         <Kafka name="kafkaStockAppender" topic="StockMarketApp">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%F] %message"/>
-            <Property name="bootstrap.servers">PLAINTEXT://b-1.stock-cluster.ojri6s.c3.kafka.us-east-2.amazonaws.com:9092</Property>
+            <Property name="bootstrap.servers">localhost:9092</Property>
         </Kafka>
         <Console name="console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %highlight{%-5p} [%F:%L] - %m%n"/>
