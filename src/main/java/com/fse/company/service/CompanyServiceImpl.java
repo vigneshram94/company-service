@@ -2,6 +2,7 @@ package com.fse.company.service;
 
 import com.fse.company.exception.CompanyAlreadyExistsException;
 import com.fse.company.exception.CompanyTurnoverException;
+import com.fse.company.exception.FieldsMissingException;
 import com.fse.company.model.Company;
 import com.fse.company.model.CompanyResponse;
 import com.fse.company.model.StockResponse;
@@ -38,10 +39,15 @@ public class CompanyServiceImpl implements CompanyService {
     private final String getlatestStock = "/api/v1.0/market/stock/get/";
     private final String deleteCompanyStock = "/api/v1.0/market/stock/delete/";
 
-    public Company addCompany(Company company) throws CompanyAlreadyExistsException, CompanyTurnoverException {
+    public Company addCompany(Company company) throws CompanyAlreadyExistsException, CompanyTurnoverException, FieldsMissingException {
         Company exists = companyRepo.findByCompanyCode(company.getCompanyCode());
         if (exists != null ) {
             throw new CompanyAlreadyExistsException();
+        }
+
+        if(company.getCompanyCeo().isEmpty() || company.getCompanyName().isEmpty() || company.getCompanyCeo().isEmpty() ||
+        company.getCompanyWebsite().isEmpty() || company.getStockExchange().isEmpty()) {
+            throw new FieldsMissingException();
         }
 
         if (company.getCompanyTurnover() < 100000000) {

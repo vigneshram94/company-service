@@ -2,6 +2,7 @@ package com.fse.company.controller;
 
 import com.fse.company.exception.CompanyAlreadyExistsException;
 import com.fse.company.exception.CompanyTurnoverException;
+import com.fse.company.exception.FieldsMissingException;
 import com.fse.company.model.Company;
 import com.fse.company.model.CompanyResponse;
 import com.fse.company.service.CompanyServiceImpl;
@@ -13,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -26,7 +28,7 @@ public class CompanyController {
 
     @PostMapping("/register")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Object> addCompany(@RequestBody Company company) throws CompanyAlreadyExistsException, CompanyTurnoverException {
+    public ResponseEntity<Object> addCompany(@RequestBody Company company) throws CompanyAlreadyExistsException, CompanyTurnoverException, FieldsMissingException {
         companyService.addCompany(company);
         return new ResponseEntity<Object>(company, HttpStatus.CREATED);
     }
